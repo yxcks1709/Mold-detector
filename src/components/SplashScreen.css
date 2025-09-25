@@ -1,0 +1,42 @@
+.splash-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #0f172a; /* slate-900 */
+  color: white;
+  animation: fade-in 0.8s ease;
+}
+
+.splash-icon {
+  width: 6rem;
+  height: 6rem;
+  color: #14b8a6; /* teal-400 */
+  animation: pulse 1.5s infinite;
+}
+
+.splash-title {
+  margin-top: 1rem;
+  font-size: 1.875rem; /* 3xl */
+  font-weight: 700;
+  text-align: center;
+  color: white;
+}
+
+.splash-subtitle {
+  margin-top: 0.5rem;
+  font-size: 0.875rem; /* sm */
+  color: #94a3b8; /* gray-400 */
+}
+
+/* Animaciones */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
