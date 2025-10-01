@@ -63,6 +63,7 @@ function App() {
           <Route path="/login" element={<LoginScreen />} />
           <Route path="/splash" element={<SplashScreen />} />
           <Route path="/register" element={<RegisterScreen />} />
+          <Route path="/" element={<LoginScreen />} />
         </Routes>
       </div>
     </Router>

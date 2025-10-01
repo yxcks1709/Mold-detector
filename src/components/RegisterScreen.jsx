@@ -3,8 +3,6 @@ import "./LoginScreen.css";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, set } from "firebase/database";
 import { useNavigate } from "react-router-dom";
-
-// 👇 IMPORTA la instancia ya inicializada desde firebase.js
 import { auth, database } from "../firebase";
 
 const RegisterScreen = () => {
@@ -15,32 +13,45 @@ const RegisterScreen = () => {
   const navigate = useNavigate();
 
   const handleRegister = async () => {
+    console.log("📡 auth recibido:", auth);
+
+    if (!email || !password || !confirmPassword) {
+      alert("Por favor completa todos los campos.");
+      return;
+    }
+
     if (password !== confirmPassword) {
       alert("Las contraseñas no coinciden");
       return;
     }
 
+    if (password.length < 6) {
+      alert("La contraseña debe tener al menos 6 caracteres.");
+      return;
+    }
+
     try {
-      // ✅ Usa la instancia importada en lugar de crear una nueva
+      console.log("📧 Email:", email);
+      console.log("🔑 Password:", password);
+
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
-
       const user = userCredential.user;
 
-      // ✅ Guardar datos del usuario en Realtime Database
       await set(ref(database, `usuarios/${user.uid}/info`), {
         email: user.email,
         nombre: nombre || "Usuario sin nombre",
         creadoEn: new Date().toISOString(),
       });
 
-      alert("✅ Account created successfully!");
-      navigate("/"); // ← vuelve al login
+      alert("✅ Cuenta creada con éxito");
+      navigate("/");
     } catch (error) {
-      alert("❌ Error: " + error.message);
+      console.log("❌ Error detallado:", error);
+      alert("❌ " + error.message);
     }
   };
 
@@ -89,7 +100,7 @@ const RegisterScreen = () => {
         <div className="login-footer">
           Already have an account?{" "}
           <a
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/login")}
             className="link"
             style={{ cursor: "pointer" }}
           >
