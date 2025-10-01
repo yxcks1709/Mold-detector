@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./HomeScreen.css";
 import { database } from "../firebase";
-import { ref, onValue } from "firebase/database";
+import { getAuth } from "firebase/auth";
+import { ref, onValue, set } from "firebase/database";
+import { useNavigate } from "react-router-dom";
 import {
   LineChart,
   Line,
@@ -17,15 +19,15 @@ const HomeScreen = ({
   tempAlertLimit = 28,
   humidAlertLimit = 70,
   isCelsisus = true,
-  setCurrentPage,
 }) => {
   const [latestData, setLatestData] = useState(null);
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const sensorsRef = ref(database, "sensors");
-    const unsubscribe = onValue(sensorsRef, (snapshot) => {
+    const unsubscribe = onValue(sensorsRef, async (snapshot) => {
       const data = snapshot.val();
       console.log("📥 Datos desde Firebase:", data);
 
@@ -40,21 +42,57 @@ const HomeScreen = ({
               })
             : "Sin hora",
         }));
+
         const lastEntry = entries[entries.length - 1];
         setLatestData(lastEntry);
+
         const last24h = Date.now() - 24 * 60 * 60 * 1000;
         const filtered = entries.filter((e) => e.timestamp >= last24h);
         setChartData(filtered);
+
+        const auth = getAuth();
+        const user = auth.currentUser;
+
+        if (user) {
+          const uid = user.uid;
+          console.log("👤 Authenticated user:", uid);
+
+          for (const [id, sensorData] of Object.entries(data)) {
+            await set(
+              ref(database, `usuarios/${uid}/sensores/${id}`),
+              sensorData
+            );
+          }
+          console.log("✅ Datos copiados al usuario en usuarios/" + uid);
+        } else {
+          console.log(
+            "⚠️ Ningún usuario autenticado. No se guardarán datos en usuarios/"
+          );
+        }
       }
       setLoading(false);
     });
+
     return () => unsubscribe();
   }, []);
-  const tempValue = latestData?.temperature ?? "--";
+
+  const tempValueC = latestData?.temperature ?? "--";
+  const tempValue =
+    tempValueC === "--"
+      ? "--"
+      : isCelsisus
+      ? tempValueC.toFixed(1)
+      : ((tempValueC * 9) / 5 + 32).toFixed(1);
+
   const humidValue = latestData?.humidity ?? "--";
+
+  const tempLimitInCelsius = isCelsisus
+    ? tempAlertLimit
+    : ((tempAlertLimit - 32) * 5) / 9;
+
   const status =
     latestData &&
-    (latestData.temperature > tempAlertLimit ||
+    (latestData.temperature > tempLimitInCelsius ||
       latestData.humidity > humidAlertLimit)
       ? "Alert"
       : "Normal";
@@ -94,27 +132,34 @@ const HomeScreen = ({
             <h2 style={{ marginBottom: "12px" }}>Graph (Last 24 h)</h2>
             {chartData.length > 0 ? (
               <div className="Graph">
-              <ResponsiveContainer width="100%" height={250}>
-                <LineChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
-                  <XAxis dataKey="time" stroke="#cbd5e1" />
-                  <YAxis stroke="#cbd5e1" />
-                  <Tooltip />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="temperature"
-                    stroke="#38bdf8"
-                    name="Temperature (°C)"
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="humidity"
-                    stroke="#a78bfa"
-                    name="Humidity (%)"
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+                <ResponsiveContainer width="100%" height={250}>
+                  <LineChart data={chartData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
+                    <XAxis dataKey="time" stroke="#cbd5e1" />
+                    <YAxis stroke="#cbd5e1" />
+                    <Tooltip />
+                    <Legend />
+                    <Line
+                      type="monotone"
+                      dataKey="temperature"
+                      stroke="#38bdf8"
+                      name={`Temperature (°${isCelsisus ? "C" : "F"})`}
+                      dot={false}
+                      formatter={(value) =>
+                        isCelsisus
+                          ? `${value.toFixed(1)} °C`
+                          : `${((value * 9) / 5 + 32).toFixed(1)} °F`
+                      }
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="humidity"
+                      stroke="#a78bfa"
+                      name="Humidity (%)"
+                      dot={false}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
               </div>
             ) : (
               <p style={{ textAlign: "center", color: "#94a3b8" }}>
@@ -126,30 +171,15 @@ const HomeScreen = ({
           <div className="button-grid">
             <button
               className="button button-teal"
-              onClick={() => setCurrentPage("dataDetail")}
+              onClick={() => navigate("/data")}
             >
               See Records
             </button>
             <button
               className="button button-teal"
-              onClick={() => setCurrentPage("alerts")}
+              onClick={() => navigate("/alerts")}
             >
               Alerts
-            </button>
-          </div>
-
-          <div className="button-grid" style={{ marginTop: "16px" }}>
-            <button
-              className="button button-slate"
-              onClick={() => setCurrentPage("settings")}
-            >
-              Settings
-            </button>
-            <button
-              className="button button-slate"
-              onClick={() => setCurrentPage("profile")}
-            >
-              Profile
             </button>
           </div>
         </>

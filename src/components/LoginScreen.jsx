@@ -1,41 +1,39 @@
-import React from 'react';
-import './LoginScreen.css';
+import React, { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase"; // 👈 usa el mismo auth inicializado
+import LoginScreen from "./LoginScreen";
+import HomeScreen from "./HomeScreen";
 
-const LoginScreen = ({ email, setEmail, password, setPassword, handleLogin, handleRegister }) => (
-  <div className="login-container">
-    <h1 className="login-title">¡Bienvenido!</h1>
-    <div className="login-box">
-      <h2 className="login-subtitle">Iniciar Sesión</h2>
-      <input
-        type="email"
-        placeholder="Email o usuario"
-        className="login-input"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Contraseña"
-        className="login-input"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button className="login-button" onClick={handleLogin}>Ingresar</button>
+const AuthApp = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-      <div className="login-options">
-        <button onClick={() => alert('Función no implementada.')}>¿Olvidaste tu contraseña?</button>
-        <div>
-          <input type="checkbox" id="remember" />
-          <label htmlFor="remember">Recuérdame</label>
-        </div>
-      </div>
+  const handleLogin = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log("✅ Usuario logueado:", userCredential.user.uid);
+      setIsLoggedIn(true); // 👈 puedes cambiar el estado o navegar
+    } catch (error) {
+      alert("❌ Error al iniciar sesión: " + error.message);
+    }
+  };
 
-      <div className="login-footer">
-        ¿No tienes cuenta?{' '}
-        <button onClick={handleRegister}>Regístrate</button>
-      </div>
-    </div>
-  </div>
-);
+  return (
+    <>
+      {!isLoggedIn ? (
+        <LoginScreen
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          handleLogin={handleLogin}
+        />
+      ) : (
+        <HomeScreen />
+      )}
+    </>
+  );
+};
 
-export default LoginScreen;
+export default AuthApp;

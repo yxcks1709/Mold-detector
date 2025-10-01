@@ -88,14 +88,26 @@
   text-decoration: underline;
 }
 
+.link {
+  color: #14b8a6;;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.link:hover {
+  text-decoration: underline;
+  color: #16e9d0;;
+}
+
+.login-footer {
+  margin-top: 18px;
+  font-size: 14px;
+  text-align: center;
+}
+
 .login-options {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.875rem;
-  color: #94a3b8; /* slate-400 */
-}
-
-.login-options input[type="checkbox"] {
-  margin-right: 8px;
 }
