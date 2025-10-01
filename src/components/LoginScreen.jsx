@@ -1,15 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import "./LoginScreen.css";
-import { useNavigate } from "react-router-dom"; 
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
-const LoginScreen = ({
-  email,
-  setEmail,
-  password,
-  setPassword,
-  handleLogin,
-}) => {
+const LoginScreen = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      alert("Please, Fill All");
+      return;
+    }
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log("✅ Usuario logueado:", userCredential.user);
+
+      alert("✅ Inicio de sesión exitoso");
+      navigate("/home");
+    } catch (error) {
+      console.error("❌ Error al iniciar sesión:", error);
+      alert("❌ " + error.message);
+    }
+  };
 
   return (
     <div className="login-container">
@@ -50,7 +66,7 @@ const LoginScreen = ({
 
           <div>
             <input type="checkbox" id="remember" />
-            <label htmlFor="remember">Recuérdame</label>
+            <label htmlFor="remember">Remember me</label>
           </div>
         </div>
 

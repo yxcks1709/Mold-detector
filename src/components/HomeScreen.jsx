@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./HomeScreen.css";
-import { database } from "../firebase";
-import { getAuth } from "firebase/auth";
+import { database, auth } from "../firebase";
 import { ref, onValue, set } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import {
@@ -24,68 +23,61 @@ const HomeScreen = ({
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const convertTemp = (temp) =>
+    isCelsisus ? temp.toFixed(1) : ((temp * 9) / 5 + 32).toFixed(1);
+  const saveSensorDataForUser = async (data) => {
+    const user = auth.currentUser;
+    if (!user) return console.log("⚠️ Ningún usuario autenticado");
+    const uid = user.uid;
+    await Promise.all(
+      Object.entries(data).map(([id, sensorData]) =>
+        set(ref(database, `usuarios/${uid}/sensores/${id}`), sensorData)
+      )
+    );
+    console.log(`✅ Datos copiados en usuarios/${uid}`);
+  };
 
   useEffect(() => {
-    const sensorsRef = ref(database, "sensors");
-    const unsubscribe = onValue(sensorsRef, async (snapshot) => {
-      const data = snapshot.val();
-      console.log("📥 Datos desde Firebase:", data);
+  const unsubscribe = onValue(ref(database, "sensors"), async (snapshot) => {
+    const data = snapshot.val();
+    if (!data) return setLoading(false);
 
-      if (data) {
-        const entries = Object.entries(data).map(([id, value]) => ({
-          id,
-          ...value,
-          time: value.timestamp
-            ? new Date(value.timestamp).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })
-            : "Sin hora",
-        }));
+    const entries = Object.entries(data).map(([id, v]) => ({
+      id,
+      ...v,
+      time: v.timestamp
+        ? new Date(v.timestamp).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })
+        : "Sin hora",
+    }));
 
-        const lastEntry = entries[entries.length - 1];
-        setLatestData(lastEntry);
+    const threeHoursAgo = Date.now() - 3 * 60 * 60 * 1000;
+    const last3hData = entries.filter((e) => e.timestamp >= threeHoursAgo);
+    const filteredEvery5Min = [];
+    let lastTime = 0;
+    const interval = 5 * 60 * 1000; // 5 minutos en ms
 
-        const last24h = Date.now() - 24 * 60 * 60 * 1000;
-        const filtered = entries.filter((e) => e.timestamp >= last24h);
-        setChartData(filtered);
-
-        const auth = getAuth();
-        const user = auth.currentUser;
-
-        if (user) {
-          const uid = user.uid;
-          console.log("👤 Authenticated user:", uid);
-
-          for (const [id, sensorData] of Object.entries(data)) {
-            await set(
-              ref(database, `usuarios/${uid}/sensores/${id}`),
-              sensorData
-            );
-          }
-          console.log("✅ Datos copiados al usuario en usuarios/" + uid);
-        } else {
-          console.log(
-            "⚠️ Ningún usuario autenticado. No se guardarán datos en usuarios/"
-          );
-        }
+    for (const entry of last3hData) {
+      if (entry.timestamp - lastTime >= interval) {
+        filteredEvery5Min.push(entry);
+        lastTime = entry.timestamp;
       }
-      setLoading(false);
-    });
+    }
 
-    return () => unsubscribe();
-  }, []);
+    setLatestData(filteredEvery5Min.at(-1));
+    setChartData(filteredEvery5Min);
 
-  const tempValueC = latestData?.temperature ?? "--";
-  const tempValue =
-    tempValueC === "--"
-      ? "--"
-      : isCelsisus
-      ? tempValueC.toFixed(1)
-      : ((tempValueC * 9) / 5 + 32).toFixed(1);
+    await saveSensorDataForUser(data);
+    setLoading(false);
+  });
 
+  return () => unsubscribe();
+}, []);
+
+  const tempValue = latestData ? convertTemp(latestData.temperature) : "--";
   const humidValue = latestData?.humidity ?? "--";
-
   const tempLimitInCelsius = isCelsisus
     ? tempAlertLimit
     : ((tempAlertLimit - 32) * 5) / 9;
@@ -127,58 +119,43 @@ const HomeScreen = ({
               Status: {status}
             </p>
           </div>
-
           <div className="chart-box">
             <h2 style={{ marginBottom: "12px" }}>Graph (Last 24 h)</h2>
             {chartData.length > 0 ? (
-              <div className="Graph">
-                <ResponsiveContainer width="100%" height={250}>
-                  <LineChart data={chartData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
-                    <XAxis dataKey="time" stroke="#cbd5e1" />
-                    <YAxis stroke="#cbd5e1" />
-                    <Tooltip />
-                    <Legend />
-                    <Line
-                      type="monotone"
-                      dataKey="temperature"
-                      stroke="#38bdf8"
-                      name={`Temperature (°${isCelsisus ? "C" : "F"})`}
-                      dot={false}
-                      formatter={(value) =>
-                        isCelsisus
-                          ? `${value.toFixed(1)} °C`
-                          : `${((value * 9) / 5 + 32).toFixed(1)} °F`
-                      }
-                    />
-                    <Line
-                      type="monotone"
-                      dataKey="humidity"
-                      stroke="#a78bfa"
-                      name="Humidity (%)"
-                      dot={false}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
+              <ResponsiveContainer width="100%" height={250}>
+                <LineChart data={chartData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
+                  <XAxis dataKey="time" stroke="#cbd5e1" />
+                  <YAxis stroke="#cbd5e1" />
+                  <Tooltip />
+                  <Legend />
+                  <Line
+                    type="monotone"
+                    dataKey="temperature"
+                    stroke="#38bdf8"
+                    name={`Temperature (°${isCelsisus ? "C" : "F"})`}
+                    dot={false}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="humidity"
+                    stroke="#a78bfa"
+                    name="Humidity (%)"
+                    dot={false}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
             ) : (
               <p style={{ textAlign: "center", color: "#94a3b8" }}>
                 No data in last 24 h.
               </p>
             )}
           </div>
-
           <div className="button-grid">
-            <button
-              className="button button-teal"
-              onClick={() => navigate("/data")}
-            >
+            <button className="button button-teal" onClick={() => navigate("/data")}>
               See Records
             </button>
-            <button
-              className="button button-teal"
-              onClick={() => navigate("/alerts")}
-            >
+            <button className="button button-teal" onClick={() => navigate("/alerts")}>
               Alerts
             </button>
           </div>
