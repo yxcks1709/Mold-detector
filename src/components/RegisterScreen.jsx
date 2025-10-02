@@ -47,10 +47,10 @@ const RegisterScreen = () => {
         creadoEn: new Date().toISOString(),
       });
 
-      alert("✅ Cuenta creada con éxito");
+      alert("✅ Account created successfully");
       navigate("/");
     } catch (error) {
-      console.log("❌ Error detallado:", error);
+      console.log("❌ Error : ", error);
       alert("❌ " + error.message);
     }
   };
@@ -63,7 +63,7 @@ const RegisterScreen = () => {
 
         <input
           type="text"
-          placeholder="Nombre"
+          placeholder="Name"
           className="login-input"
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}

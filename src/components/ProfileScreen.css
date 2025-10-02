@@ -18,7 +18,7 @@
 
 .profile-avatar {
   width: 96px;
-  height: 96px;
+  min-height: 96px;
   border-radius: 50%;
   background-color: #1e293b; /* slate-700 */
   display: flex;

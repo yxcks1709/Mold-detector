@@ -19,10 +19,10 @@ const LoginScreen = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log("✅ Usuario logueado:", userCredential.user);
 
-      alert("✅ Inicio de sesión exitoso");
+      alert("✅ Login success");
       navigate("/home");
     } catch (error) {
-      console.error("❌ Error al iniciar sesión:", error);
+      console.error("❌ Login error:", error);
       alert("❌ " + error.message);
     }
   };
