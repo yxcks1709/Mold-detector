@@ -47,7 +47,7 @@ const RegisterScreen = () => {
         creadoEn: new Date().toISOString(),
       });
 
-      alert("✅ Account created successfully");
+      alert("Account created successfully");
       navigate("/");
     } catch (error) {
       console.log("❌ Error : ", error);

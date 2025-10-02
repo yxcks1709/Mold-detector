@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import { ref, get } from "firebase/database";
 import { database } from "../firebase";
 import "./ProfileScreen.css";
@@ -24,6 +24,17 @@ const ProfileScreen = () => {
       });
     }
   }, []);
+
+  const handleLogout = async () => {
+    const auth = getAuth();
+    try {
+      await signOut(auth);
+      console.log("Sesión cerrada correctamente");
+      navigate("/login");
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error.message);
+    }
+  };
 
   return (
     <div className="profile-container">
@@ -54,21 +65,17 @@ const ProfileScreen = () => {
               className="profile-button settings"
               onClick={() => navigate("/settings")}
             >
-            Settings
+              Settings
             </button>
-
-            <button
-              className="profile-button logout"
-              onClick={() => navigate("/login")}
-            >
-            Log Out
+            <button className="profile-button logout" onClick={handleLogout}>
+              Log Out
             </button>
 
             <button
               className="profile-button back"
               onClick={() => navigate("/home")}
             >
-            Home
+              Home
             </button>
           </div>
         </>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./LoginScreen.css";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { ref, set } from "firebase/database"; 
+import { auth, database } from "../firebase"; 
 import { useNavigate } from "react-router-dom";
 
 const LoginScreen = () => {
@@ -11,18 +12,23 @@ const LoginScreen = () => {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      alert("Please, Fill All");
+      alert("Please fill all fields");
       return;
     }
 
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log("✅ Usuario logueado:", userCredential.user);
+      const user = userCredential.user;
 
-      alert("✅ Login success");
+      console.log("Usuario logueado:", user.uid);
+
+      await set(ref(database, "config/uid"), user.uid);
+      console.log("UID guardado en Firebase:", user.uid);
+
+      alert("Login success");
       navigate("/home");
     } catch (error) {
-      console.error("❌ Login error:", error);
+      console.error("Login error:", error);
       alert("❌ " + error.message);
     }
   };

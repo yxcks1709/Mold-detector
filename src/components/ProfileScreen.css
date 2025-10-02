@@ -13,14 +13,14 @@
   font-weight: 700;
   margin-bottom: 24px;
   text-align: center;
-  color: #14b8a6; /* teal-400 */
+  color: #14b8a6;
 }
 
 .profile-avatar {
   width: 96px;
   min-height: 96px;
   border-radius: 50%;
-  background-color: #1e293b; /* slate-700 */
+  background-color: #1e293b; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,14 +29,14 @@
 }
 
 .profile-info {
-  background-color: #1e293b; /* slate-800 */
+  background-color: #1e293b;
   padding: 24px;
   border-radius: 24px;
   box-shadow: 0 8px 16px rgba(0,0,0,0.4);
   width: 100%;
   max-width: 360px;
   margin-bottom: 24px;
-  border: 1px solid #334155; /* slate-700 */
+  border: 1px solid #334155;
 }
 
 .profile-info p {
@@ -46,7 +46,7 @@
 .profile-info .label {
   font-size: 1rem;
   font-weight: 600;
-  color: #cbd5e1; /* slate-300 */
+  color: #cbd5e1;
   margin-bottom: 4px;
 }
 
@@ -72,25 +72,25 @@
 }
 
 .profile-button.settings {
-  background-color: #14b8a6; /* teal-500 */
+  background-color: #14b8a6;
 }
 
 .profile-button.settings:hover {
-  background-color: #0d9488; /* teal-600 */
+  background-color: #0d9488; 
 }
 
 .profile-button.logout {
-  background-color: #dc2626; /* red-600 */
+  background-color: #dc2626;
 }
 
 .profile-button.logout:hover {
-  background-color: #b91c1c; /* red-700 */
+  background-color: #b91c1c;
 }
 
 .profile-button.back {
-  background-color: #334155; /* slate-700 */
+  background-color: #334155;
 }
 
 .profile-button.back:hover {
-  background-color: #475569; /* slate-600 */
+  background-color: #475569;
 }

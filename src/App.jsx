@@ -6,7 +6,6 @@ import AlertsScreen from "./components/AlertsScreen";
 import DataDetailScreen from "./components/DataDetailScreen";
 import HomeScreen from "./components/HomeScreen";
 import LoginScreen from "./components/LoginScreen";
-import SplashScreen from "./components/SplashScreen";
 import Navbar from "./components/NavBar";
 import "./index.css";
 import RegisterScreen from "./components/RegisterScreen";
@@ -61,9 +60,8 @@ function App() {
           <Route path="/alerts" element={<AlertsScreen />} />
           <Route path="/data" element={<DataDetailScreen />} />
           <Route path="/login" element={<LoginScreen />} />
-          <Route path="/splash" element={<SplashScreen />} />
           <Route path="/register" element={<RegisterScreen />} />
-          <Route path="/" element={<LoginScreen />} />
+          <Route path="/" element={<LoginScreen />} />  
         </Routes>
       </div>
     </Router>
