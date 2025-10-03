@@ -13,7 +13,7 @@
 
 ## 🌐 Live Demo
 
-👉 [Click here to view the live demo](https://mold-detector.netlify.app/home)
+👉 [Click here to view the live demo](https://mold-detector.netlify.app/)
 
 
 ## 📸 Preview
