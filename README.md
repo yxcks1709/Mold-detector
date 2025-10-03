@@ -1,16 +1,70 @@
-# React + Vite
+# 🦠 Mold Detector IoT Dashboard (곰팡이 탐지기 시스템)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🚀 A full IoT project designed to detect environmental conditions that promote mold growth, using physical sensors connected to an ESP8266, storing data in Firebase Realtime Database, and visualizing it in a React web dashboard.
 
-Currently, two official plugins are available:
+## ⚙️ Key Features
+- 🌡️ Real-time temperature and humidity monitoring with DHT22
+- ☀️ UV index measurement with GUVA-S12SD
+- ☁️ Real-time data storage with Firebase Realtime Database
+- 👤 User authentication with Firebase Authentication
+- 📊 Interactive dashboard built with React
+- 📅 Historical data view with date filtering
+- 📱 Fully responsive design for mobile and desktop
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌐 Live Demo
 
-## React Compiler
+👉 [Click here to view the live demo](https://mold-detector.netlify.app/home)
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+## 📸 Preview
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+<img width="1870" height="882" alt="MoldDashboard" src="https://github.com/user-attachments/assets/e6058815-13b5-4456-abc3-b0f3366952b0" />
+
+## 📖 Description
+
+This IoT project monitors temperature, humidity, and UV radiation in real time to detect conditions favorable for mold growth indoors.
+
+The data is collected by an ESP8266 board connected to DHT22 and GUVA-S12SD sensors, sent to Firebase, and displayed on a React dashboard.
+
+✅ Goal: Prevent mold growth by identifying risky environmental conditions early.
+
+## 🧰 Technologies Used
+| Category | Technology |
+|----------|------------|
+| 💻 Frontend | React.js, Recharts, CSS |
+| ☁️ Backend | Firebase Realtime Database, Firebase Auth |
+| 📡 Hardware | ESP8266 (NodeMCU), DHT22, GUVA-S12SD |
+| ⚙️ Others | HTML5, JavaScript (ES6+), Netlify |
+
+## 📡 System Architecture
+
+🌡️ Sensors (DHT22, GUVA-S12SD)
+              │
+              ▼
+📶 ESP8266 Microcontroller
+              │
+              ▼
+☁️ Firebase Realtime Database
+              │
+              ▼
+💻 React Web Dashboard
+              │
+              ▼
+📱 Mobile & Desktop Access
+
+## 🛠️ Installation & Usage
+
+```bash
+git clone https://github.com/yourusername/mold-detector.git
+cd mold-detector
+npm install
+npm run dev
+```
+## 📄 License
+
+This project is licensed under the **MIT License**
+
+---
+
+📌 Developed by **YucksDev.**
+
