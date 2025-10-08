@@ -1,0 +1,110 @@
+{
+  "login": {
+    "welcome": "Welcome!",
+    "login": "Log In",
+    "email_placeholder": "Email/User",
+    "password_placeholder": "Password",
+    "trouble": "Trouble logging in?",
+    "remember_me": "Remember me",
+    "no_account": "Don't have an account?",
+    "signup": "Sign up",
+    "login_success": "Login success",
+    "login_error": "Login error"
+  },
+  "register": {
+    "create_account": "Create Account",
+    "sign_up": "Sign Up",
+    "name_placeholder": "Name",
+    "email_placeholder": "Email",
+    "password_placeholder": "Password",
+    "confirm_password": "Confirm Password",
+    "already_account": "Already have an account?",
+    "login": "Log In",
+    "password_mismatch": "Passwords do not match",
+    "password_length": "Password must be at least 6 characters",
+    "account_created": "Account created successfully"
+  },
+  "navbar": {
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "profile": "Profile",
+    "data_history": "Data History",
+    "alerts": "Alerts",
+    "login": "Login",
+    "register": "Register"
+  },
+  "home": {
+    "dashboard": "Dashboard",
+    "no_devices": "No devices found. Add one from the Settings page.",
+    "loading": "Loading Data...",
+    "select_device": "Select Device",
+    "choose_device": "-- Choose a device --",
+    "data_for": "Data for",
+    "temperature": "Temperature",
+    "humidity": "Humidity",
+    "uv_index": "UV Index",
+    "status": "Status",
+    "normal": "Normal",
+    "alert": "Alert",
+    "graph_title": "Graph (Last 3 hours)",
+    "no_data": "No data in the last 3 hours."
+  },
+  "settings": {
+    "settings": "Settings",
+    "temperature_unit": "Temperature Unit",
+    "celsius": "Celsius (°C)",
+    "fahrenheit": "Fahrenheit (°F)",
+    "temp_alert_limit": "Temperature Alert Limit",
+    "humid_alert_limit": "Humidity Alert Limit",
+    "save_settings": "Save Settings",
+    "appearance_language": "Appearance & Language",
+    "language": "Language",
+    "device_management": "Device Management",
+    "add_device": "Add a new device",
+    "enter_device_name": "Enter device name...",
+    "current_devices": "Current devices",
+    "delete": "Delete",
+    "no_devices_added": "No devices added yet."
+  },
+  "profile": {
+    "profile": "Profile",
+    "loading": "Loading Profile...",
+    "uid": "UID",
+    "name": "Name",
+    "email": "E-Mail",
+    "role": "Role",
+    "user": "User",
+    "settings": "Settings",
+    "logout": "Log Out",
+    "home": "Home"
+  },
+  "data": {
+    "sensor_history": "Sensor Data History",
+    "filter_date": "Filter by date",
+    "view_all": "View all",
+    "table_headers": {
+      "id": "#",
+      "date": "Date",
+      "time": "Time",
+      "temperature": "Temperature (°C)",
+      "humidity": "Humidity (%)",
+      "uv": "UV Index"
+    },
+    "no_data": "No Data.",
+    "home": "Home"
+  },
+  "alerts": {
+    "mold_alerts": "Mold Alerts",
+    "no_risk": "✅ No continuous mold risk detected in the last 3 hours.",
+    "mold_risk": "⚠️ Mold Growth Risk",
+    "mold_message": "Favorable conditions for mold growth have been present continuously for the last 3 hours."
+  },
+  "devices": {
+    "add_device": "Add Device",
+    "device_name_placeholder": "Device name",
+    "device_created": "✅ Device \"{{deviceName}}\" created.",
+    "device_error": "❌ Error creating device.",
+    "not_authenticated": "⚠️ You are not authenticated.",
+    "enter_name": "⚠️ Enter a name."
+  }
+}

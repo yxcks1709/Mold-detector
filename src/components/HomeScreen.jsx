@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./HomeScreen.css";
 import { database, auth } from "../firebase";
-import { ref, onValue, set } from "firebase/database";
-import { onAuthStateChanged } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { ref, onValue } from "firebase/database";
 import {
   LineChart,
   Line,
@@ -20,63 +18,48 @@ const HomeScreen = ({
   humidAlertLimit = 70,
   isCelsisus = true,
 }) => {
+  const [devices, setDevices] = useState([]);
+  const [selectedDevice, setSelectedDevice] = useState("");
   const [latestData, setLatestData] = useState(null);
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [uid, setUid] = useState(null);
-  const navigate = useNavigate();
 
   const convertTemp = (temp) =>
     isCelsisus ? temp.toFixed(1) : ((temp * 9) / 5 + 32).toFixed(1);
 
   useEffect(() => {
-    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log("Usuario autenticado detectado:", user.uid);
-        setUid(user.uid);
-      } else {
-        console.log("No hay usuario autenticado");
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const devicesRef = ref(database, `usuarios/${user.uid}/devices`);
+    onValue(devicesRef, (snapshot) => {
+      const data = snapshot.val() || {};
+      const list = Object.entries(data).map(([id, value]) => ({
+        id,
+        ...value,
+      }));
+      setDevices(list);
+      if (list.length > 0 && !selectedDevice) {
+        setSelectedDevice(list[0].id);
       }
     });
-
-    return () => unsubscribeAuth();
   }, []);
 
-  const saveSensorDataForUser = async (data, userUid) => {
-    if (!userUid) return console.log("⚠️ No se puede guardar: UID vacío");
-    await Promise.all(
-      Object.entries(data).map(([id, sensorData]) =>
-        set(ref(database, `usuarios/${userUid}/sensores/${id}`), sensorData)
-      )
+  useEffect(() => {
+    if (!selectedDevice) return;
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const deviceRef = ref(
+      database,
+      `usuarios/${user.uid}/sensores/${selectedDevice}`
     );
-    console.log(` Datos copiados en usuarios/${userUid}`);
-  };
 
-  useEffect(() => {
-    if (!uid) return;
-
-    const sensorsRef = ref(database, "sensors");
-    const unsubscribe = onValue(sensorsRef, async (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        await saveSensorDataForUser(data, uid);
-      }
-    });
-
-    return () => unsubscribe();
-  }, [uid]);
-
-  useEffect(() => {
-    if (!uid) return;
-
-    console.log(" Leyendo datos de:", uid);
-    const userSensorsRef = ref(database, `usuarios/${uid}/sensores`);
-
-    const unsubscribe = onValue(userSensorsRef, (snapshot) => {
+    const unsubscribe = onValue(deviceRef, (snapshot) => {
       const data = snapshot.val();
       if (!data) {
-        setChartData([]);
         setLatestData(null);
+        setChartData([]);
         setLoading(false);
         return;
       }
@@ -89,7 +72,7 @@ const HomeScreen = ({
               hour: "2-digit",
               minute: "2-digit",
             })
-          : "Sin hora",
+          : "No time",
       }));
 
       const threeHoursAgo = Date.now() - 3 * 60 * 60 * 1000;
@@ -112,34 +95,63 @@ const HomeScreen = ({
     });
 
     return () => unsubscribe();
-  }, [uid]);
+  }, [selectedDevice]);
 
   const tempValue = latestData ? convertTemp(latestData.temperature) : "--";
   const humidValue = latestData?.humidity ?? "--";
+  const uvValue = latestData?.uv?.toFixed(1) ?? "--";
+
   const tempLimitInCelsius = isCelsisus
     ? tempAlertLimit
     : ((tempAlertLimit - 32) * 5) / 9;
-
-  const uvAlertLimit = 8;
 
   const status =
     latestData &&
     (latestData.temperature > tempLimitInCelsius ||
       latestData.humidity > humidAlertLimit ||
-      latestData.uv > uvAlertLimit)
+      latestData.uv > 8)
       ? "Alert"
       : "Normal";
 
   return (
     <div className="home-container">
-      <h1 className="home-title">Dashboard</h1>
+      <h1 className="home-title">📊 Dashboard</h1>
+
+      {devices.length === 0 && (
+        <p style={{ textAlign: "center", marginTop: "20px", color: "#94a3b8" }}>
+          No devices found. Add one from the Settings page.
+        </p>
+      )}
 
       {loading ? (
         <p style={{ textAlign: "center" }}>Loading Data...</p>
       ) : (
         <>
           <div className="data-box">
-            <h2 style={{ textAlign: "center" }}>Data results</h2>
+            <div className="data-header">
+              <label htmlFor="device-select" className="device-label">
+                📡 Select Device:
+              </label>
+              <select
+                id="device-select"
+                className="device-dropdown"
+                value={selectedDevice}
+                onChange={(e) => setSelectedDevice(e.target.value)}
+              >
+                <option value="">-- Choose a device --</option>
+                {devices.map((device) => (
+                  <option key={device.id} value={device.id}>
+                    {device.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <h2 style={{ textAlign: "center", marginTop: "12px" }}>
+              Data for:{" "}
+              {devices.find((d) => d.id === selectedDevice)?.name || "Device"}
+            </h2>
+
             <div className="data-grid">
               <div className="data-card">
                 <p className="data-value temp-value">
@@ -152,12 +164,11 @@ const HomeScreen = ({
                 <p className="data-label">Humidity</p>
               </div>
               <div className="data-card">
-                <p className="data-value uv-value">
-                  {latestData?.uv ? latestData.uv.toFixed(1) : "--"}
-                </p>
+                <p className="data-value uv-value">{uvValue}</p>
                 <p className="data-label">UV Index</p>
               </div>
             </div>
+
             <p
               className={`status ${
                 status === "Normal" ? "status-normal" : "status-alert"
@@ -202,24 +213,9 @@ const HomeScreen = ({
               </ResponsiveContainer>
             ) : (
               <p style={{ textAlign: "center", color: "#94a3b8" }}>
-                No data in last 3 hours.
+                No data in the last 3 hours.
               </p>
             )}
-          </div>
-
-          <div className="button-grid">
-            <button
-              className="button button-teal"
-              onClick={() => navigate("/data")}
-            >
-              See Records
-            </button>
-            <button
-              className="button button-teal"
-              onClick={() => navigate("/alerts")}
-            >
-              Alerts
-            </button>
           </div>
         </>
       )}

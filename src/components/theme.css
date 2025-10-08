@@ -1,0 +1,62 @@
+:root {
+  --color-bg: #0f172a;
+  --color-bg-card: #1e293b;
+  --color-bg-secondary: #273449;
+  --color-bg-ter: #2f3f56;
+  --color-nav-bg: rgba(30, 41, 59, 0.8);
+  --shadow-navbar: 0 2px 10px rgba(0, 0, 0, 0.3);
+  --color-border: #334155;
+  --color-text: #f8fafc;
+  --color-text-secondary: #cbd5e1;
+  --color-muted: #94a3b8;
+
+  --color-accent: #14b8a6;
+  --color-accent-hover: #0d9488;
+
+  --color-success: #22c55e;
+  --color-danger: #dc2626;
+  --color-danger-hover: #b91c1c;
+  --color-warning: #facc15;
+
+  --color-temp: #67e8f9;
+  --color-humid: #a78bfa;
+  --color-uv: #facc15;
+
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+
+  --font-family: "Inter", sans-serif;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.2rem;
+  --font-size-xl: 2rem;
+}
+
+[data-theme="light"] {
+  --color-bg: #f8fafc;
+  --color-bg-card: #ffffff;
+  --color-bg-secondary: #faf6f6;
+  --color-bg-ter: #e5e5e6;
+  --color-nav-bg: rgb(255, 255, 255);
+  --shadow-navbar: 0 2px 10px rgba(0, 0, 0, 0.08);
+  --color-text: #0f172a;
+  --color-text-secondary: #334155;
+  --color-muted: #64748b;
+  --color-accent: #7c3aed;
+  --color-accent-hover: #6d28d9;
+  --color-border: #cbd5e1;
+  --color-temp: #0284c7;
+  --color-humid: #7c3aed;
+  --color-uv: #ca8a04;
+  --color-success: #16a34a;
+  --color-danger: #dc2626;
+
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --shadow-navbar: 0 2px 10px rgba(0, 0, 0, 0.1);
+}

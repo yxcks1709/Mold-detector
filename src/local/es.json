@@ -1,0 +1,110 @@
+{
+  "login": {
+    "welcome": "¡Bienvenido!",
+    "login": "Iniciar sesión",
+    "email_placeholder": "Email/Usuario",
+    "password_placeholder": "Contraseña",
+    "trouble": "¿Problemas para iniciar sesión?",
+    "remember_me": "Recuérdame",
+    "no_account": "¿No tienes una cuenta?",
+    "signup": "Regístrate",
+    "login_success": "Inicio de sesión exitoso",
+    "login_error": "Error al iniciar sesión"
+  },
+  "register": {
+    "create_account": "Crear cuenta",
+    "sign_up": "Registrarse",
+    "name_placeholder": "Nombre",
+    "email_placeholder": "Correo electrónico",
+    "password_placeholder": "Contraseña",
+    "confirm_password": "Confirmar contraseña",
+    "already_account": "¿Ya tienes una cuenta?",
+    "login": "Inicia sesión",
+    "password_mismatch": "Las contraseñas no coinciden",
+    "password_length": "La contraseña debe tener al menos 6 caracteres",
+    "account_created": "Cuenta creada exitosamente"
+  },
+  "navbar": {
+    "dashboard": "Panel",
+    "settings": "Ajustes",
+    "profile": "Perfil",
+    "data_history": "Historial de datos",
+    "alerts": "Alertas",
+    "login": "Iniciar sesión",
+    "register": "Registrarse"
+  },
+  "home": {
+    "dashboard": "Panel",
+    "no_devices": "No se encontraron dispositivos. Agrega uno desde la página de Ajustes.",
+    "loading": "Cargando datos...",
+    "select_device": "Seleccionar dispositivo",
+    "choose_device": "-- Elegir un dispositivo --",
+    "data_for": "Datos de",
+    "temperature": "Temperatura",
+    "humidity": "Humedad",
+    "uv_index": "Índice UV",
+    "status": "Estado",
+    "normal": "Normal",
+    "alert": "Alerta",
+    "graph_title": "Gráfico (Últimas 3 horas)",
+    "no_data": "No hay datos en las últimas 3 horas."
+  },
+  "settings": {
+    "settings": "Ajustes",
+    "temperature_unit": "Unidad de temperatura",
+    "celsius": "Celsius (°C)",
+    "fahrenheit": "Fahrenheit (°F)",
+    "temp_alert_limit": "Límite de alerta de temperatura",
+    "humid_alert_limit": "Límite de alerta de humedad",
+    "save_settings": "Guardar ajustes",
+    "appearance_language": "Apariencia e idioma",
+    "language": "Idioma",
+    "device_management": "Gestión de dispositivos",
+    "add_device": "Agregar un nuevo dispositivo",
+    "enter_device_name": "Introduce el nombre del dispositivo...",
+    "current_devices": "Dispositivos actuales",
+    "delete": "Eliminar",
+    "no_devices_added": "No se han agregado dispositivos aún."
+  },
+  "profile": {
+    "profile": "Perfil",
+    "loading": "Cargando perfil...",
+    "uid": "UID",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "role": "Rol",
+    "user": "Usuario",
+    "settings": "Ajustes",
+    "logout": "Cerrar sesión",
+    "home": "Inicio"
+  },
+  "data": {
+    "sensor_history": "Historial de datos del sensor",
+    "filter_date": "Filtrar por fecha",
+    "view_all": "Ver todo",
+    "table_headers": {
+      "id": "#",
+      "date": "Fecha",
+      "time": "Hora",
+      "temperature": "Temperatura (°C)",
+      "humidity": "Humedad (%)",
+      "uv": "Índice UV"
+    },
+    "no_data": "Sin datos.",
+    "home": "Inicio"
+  },
+  "alerts": {
+    "mold_alerts": "Alertas de moho",
+    "no_risk": "✅ No se detectó riesgo continuo de moho en las últimas 3 horas.",
+    "mold_risk": "⚠️ Riesgo de crecimiento de moho",
+    "mold_message": "Se han presentado condiciones favorables para el crecimiento de moho de forma continua durante las últimas 3 horas."
+  },
+  "devices": {
+    "add_device": "Agregar dispositivo",
+    "device_name_placeholder": "Nombre del dispositivo",
+    "device_created": "✅ Dispositivo \"{{deviceName}}\" creado.",
+    "device_error": "❌ Error al crear el dispositivo.",
+    "not_authenticated": "⚠️ No estás autenticado.",
+    "enter_name": "⚠️ Escribe un nombre."
+  }
+}

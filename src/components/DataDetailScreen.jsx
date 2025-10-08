@@ -48,7 +48,7 @@ const DataDetailScreen = () => {
 
   return (
     <div className="data-container">
-      <h1 className="data-title">📊 Sensor Data History</h1>
+      <h1 className="data-title"> Sensor Data History</h1>
 
       <div className="filter-section">
         <label className="filter-label">Filter by date:</label>

@@ -1,0 +1,110 @@
+{
+  "login": {
+    "welcome": "환영합니다!",
+    "login": "로그인",
+    "email_placeholder": "이메일/사용자",
+    "password_placeholder": "비밀번호",
+    "trouble": "로그인에 문제가 있나요?",
+    "remember_me": "기억하기",
+    "no_account": "계정이 없으신가요?",
+    "signup": "가입하기",
+    "login_success": "로그인 성공",
+    "login_error": "로그인 오류"
+  },
+  "register": {
+    "create_account": "계정 만들기",
+    "sign_up": "회원가입",
+    "name_placeholder": "이름",
+    "email_placeholder": "이메일",
+    "password_placeholder": "비밀번호",
+    "confirm_password": "비밀번호 확인",
+    "already_account": "이미 계정이 있으신가요?",
+    "login": "로그인",
+    "password_mismatch": "비밀번호가 일치하지 않습니다",
+    "password_length": "비밀번호는 최소 6자 이상이어야 합니다",
+    "account_created": "계정이 성공적으로 생성되었습니다"
+  },
+  "navbar": {
+    "dashboard": "대시보드",
+    "settings": "설정",
+    "profile": "프로필",
+    "data_history": "데이터 기록",
+    "alerts": "알림",
+    "login": "로그인",
+    "register": "가입하기"
+  },
+  "home": {
+    "dashboard": "대시보드",
+    "no_devices": "기기가 없습니다. 설정 페이지에서 기기를 추가하세요.",
+    "loading": "데이터 불러오는 중...",
+    "select_device": "기기 선택",
+    "choose_device": "-- 기기 선택 --",
+    "data_for": "데이터:",
+    "temperature": "온도",
+    "humidity": "습도",
+    "uv_index": "자외선 지수",
+    "status": "상태",
+    "normal": "정상",
+    "alert": "경고",
+    "graph_title": "그래프 (최근 3시간)",
+    "no_data": "최근 3시간 동안 데이터가 없습니다."
+  },
+  "settings": {
+    "settings": "설정",
+    "temperature_unit": "온도 단위",
+    "celsius": "섭씨 (°C)",
+    "fahrenheit": "화씨 (°F)",
+    "temp_alert_limit": "온도 경고 기준",
+    "humid_alert_limit": "습도 경고 기준",
+    "save_settings": "설정 저장",
+    "appearance_language": "테마 및 언어",
+    "language": "언어",
+    "device_management": "기기 관리",
+    "add_device": "새 기기 추가",
+    "enter_device_name": "기기 이름을 입력하세요...",
+    "current_devices": "현재 기기",
+    "delete": "삭제",
+    "no_devices_added": "아직 추가된 기기가 없습니다."
+  },
+  "profile": {
+    "profile": "프로필",
+    "loading": "프로필 불러오는 중...",
+    "uid": "UID",
+    "name": "이름",
+    "email": "이메일",
+    "role": "역할",
+    "user": "사용자",
+    "settings": "설정",
+    "logout": "로그아웃",
+    "home": "홈"
+  },
+  "data": {
+    "sensor_history": "센서 데이터 기록",
+    "filter_date": "날짜별 필터",
+    "view_all": "전체 보기",
+    "table_headers": {
+      "id": "#",
+      "date": "날짜",
+      "time": "시간",
+      "temperature": "온도 (°C)",
+      "humidity": "습도 (%)",
+      "uv": "자외선 지수"
+    },
+    "no_data": "데이터 없음.",
+    "home": "홈"
+  },
+  "alerts": {
+    "mold_alerts": "곰팡이 알림",
+    "no_risk": "✅ 최근 3시간 동안 곰팡이 위험이 감지되지 않았습니다.",
+    "mold_risk": "⚠️ 곰팡이 성장 위험",
+    "mold_message": "최근 3시간 동안 곰팡이 성장에 유리한 조건이 지속되었습니다."
+  },
+  "devices": {
+    "add_device": "기기 추가",
+    "device_name_placeholder": "기기 이름",
+    "device_created": "✅ \"{{deviceName}}\" 기기가 생성되었습니다.",
+    "device_error": "❌ 기기 생성 중 오류 발생.",
+    "not_authenticated": "⚠️ 로그인되지 않았습니다.",
+    "enter_name": "⚠️ 이름을 입력하세요."
+  }
+}
