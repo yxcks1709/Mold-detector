@@ -38,7 +38,7 @@ const HomeScreen = ({
       const data = snapshot.val() || {};
       const list = Object.entries(data).map(([id, value]) => ({
         id,
-        ...value,
+        name: value.name || id,
       }));
       setDevices(list);
       if (list.length > 0 && !selectedDevice) {
@@ -54,7 +54,7 @@ const HomeScreen = ({
 
     const deviceRef = ref(
       database,
-      `usuarios/${user.uid}/sensores/${selectedDevice}`
+      `usuarios/${user.uid}/devices/${selectedDevice}/sensores`
     );
 
     const unsubscribe = onValue(deviceRef, (snapshot) => {
@@ -71,9 +71,9 @@ const HomeScreen = ({
         ...v,
         time: v.timestamp
           ? new Date(v.timestamp).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })
+              hour: "2-digit",
+              minute: "2-digit",
+            })
           : "--",
       }));
 
@@ -109,9 +109,9 @@ const HomeScreen = ({
 
   const status =
     latestData &&
-      (latestData.temperature > tempLimitInCelsius ||
-        latestData.humidity > humidAlertLimit ||
-        latestData.uv > 8)
+    (latestData.temperature > tempLimitInCelsius ||
+      latestData.humidity > humidAlertLimit ||
+      latestData.uv > 8)
       ? t("home.alert")
       : t("home.normal");
 
@@ -173,8 +173,9 @@ const HomeScreen = ({
             </div>
 
             <p
-              className={`status ${status === t("home.normal") ? "status-normal" : "status-alert"
-                }`}
+              className={`status ${
+                status === t("home.normal") ? "status-normal" : "status-alert"
+              }`}
             >
               {t("home.status")}: {status}
             </p>
@@ -194,8 +195,9 @@ const HomeScreen = ({
                     type="monotone"
                     dataKey="temperature"
                     stroke="#38bdf8"
-                    name={`${t("home.temperature")} (°${isCelsisus ? "C" : "F"
-                      })`}
+                    name={`${t("home.temperature")} (°${
+                      isCelsisus ? "C" : "F"
+                    })`}
                     dot={false}
                   />
                   <Line

@@ -19,12 +19,16 @@ const LoginScreen = () => {
     }
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
 
       console.log("Usuario logueado:", user.uid);
 
-      await set(ref(database, "config/uid"), user.uid);
+      await set(ref(database, `usuarios/${user.uid}/config/uid`), user.uid);
       console.log("UID guardado en Firebase:", user.uid);
 
       alert(t("login.login_success"));

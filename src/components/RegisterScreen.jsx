@@ -44,6 +44,8 @@ const RegisterScreen = () => {
         creadoEn: new Date().toISOString(),
       });
 
+      await set(ref(database, `usuarios/${user.uid}/config/uid`), user.uid);
+
       alert(t("register.account_created"));
       navigate("/");
     } catch (error) {

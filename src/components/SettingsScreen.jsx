@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { auth, database } from "../firebase";
-import { ref, push, onValue, remove } from "firebase/database";
+import { ref, onValue, remove, set } from "firebase/database";
 import "./SettingsScreen.css";
 import ThemeToggle from "../components/ThemeToggle";
 import { useTranslation } from "react-i18next";
@@ -27,7 +27,8 @@ const SettingsScreen = ({
       const data = snapshot.val() || {};
       const list = Object.entries(data).map(([id, value]) => ({
         id,
-        ...value,
+        name: id,
+        info: value.info || {},
       }));
       setDevices(list);
     });
@@ -38,18 +39,29 @@ const SettingsScreen = ({
       alert("⚠️ " + t("settings.enter_device_name"));
       return;
     }
+
     const user = auth.currentUser;
     if (!user) return;
 
-    const devicesRef = ref(database, `usuarios/${user.uid}/devices`);
-    await push(devicesRef, { name: deviceName });
+    const deviceRef = ref(
+      database,
+      `usuarios/${user.uid}/devices/${deviceName}/info`
+    );
+    await set(deviceRef, {
+      deviceID: null,
+      registeredAt: new Date().toISOString(),
+      status: "waiting",
+    });
+
+    alert(`✅ ${deviceName} ${t("settings.device_registered")}`);
     setDeviceName("");
   };
 
-  const deleteDevice = async (id) => {
+  const deleteDevice = async (name) => {
     const user = auth.currentUser;
     if (!user) return;
-    await remove(ref(database, `usuarios/${user.uid}/devices/${id}`));
+
+    await remove(ref(database, `usuarios/${user.uid}/devices/${name}`));
   };
 
   return (
