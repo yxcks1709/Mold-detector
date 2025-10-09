@@ -3,6 +3,7 @@ import { auth, database } from "../firebase";
 import { ref, push, onValue, remove } from "firebase/database";
 import "./SettingsScreen.css";
 import ThemeToggle from "../components/ThemeToggle";
+import { useTranslation } from "react-i18next";
 
 const SettingsScreen = ({
   isCelsisus,
@@ -13,6 +14,7 @@ const SettingsScreen = ({
   setHumidAlertLimit,
   saveSettings,
 }) => {
+  const { t, i18n } = useTranslation();
   const [deviceName, setDeviceName] = useState("");
   const [devices, setDevices] = useState([]);
 
@@ -33,7 +35,7 @@ const SettingsScreen = ({
 
   const addDevice = async () => {
     if (!deviceName.trim()) {
-      alert("⚠️Please enter a device name.");
+      alert("⚠️ " + t("settings.enter_device_name"));
       return;
     }
     const user = auth.currentUser;
@@ -52,11 +54,11 @@ const SettingsScreen = ({
 
   return (
     <div className="settings-container">
-      <h1 className="settings-title">Settings</h1>
+      <h1 className="settings-title">{t("settings.settings")}</h1>
 
       <div className="settings-card">
         <div className="settings-section">
-          <label>Temperature Unit:</label>
+          <label>{t("settings.temperature_unit")}:</label>
           <div className="settings-radio-group">
             <label>
               <input
@@ -64,7 +66,7 @@ const SettingsScreen = ({
                 checked={isCelsisus}
                 onChange={() => setIsCelsisus(true)}
               />
-              Celsius (°C)
+              {t("settings.celsius")}
             </label>
             <label>
               <input
@@ -72,12 +74,13 @@ const SettingsScreen = ({
                 checked={!isCelsisus}
                 onChange={() => setIsCelsisus(false)}
               />
-              Fahrenheit (°F)
+              {t("settings.fahrenheit")}
             </label>
           </div>
         </div>
+
         <div className="settings-section">
-          <label>Temperature Alert Limit:</label>
+          <label>{t("settings.temp_alert_limit")}:</label>
           <input
             className="settings-input"
             type="number"
@@ -85,8 +88,9 @@ const SettingsScreen = ({
             onChange={(e) => setTempAlertLimit(parseFloat(e.target.value))}
           />
         </div>
+
         <div className="settings-section">
-          <label>Humidity Alert Limit:</label>
+          <label>{t("settings.humid_alert_limit")}:</label>
           <input
             className="settings-input"
             type="number"
@@ -96,22 +100,24 @@ const SettingsScreen = ({
         </div>
 
         <button className="settings-button save" onClick={saveSettings}>
-          Save Settings
+          {t("settings.save_settings")}
         </button>
       </div>
+
       <div className="settings-card">
-        <h2 style={{ marginBottom: "16px" }}>Appearance & Language</h2>
+        <h2 style={{ marginBottom: "16px" }}>
+          {t("settings.appearance_language")}
+        </h2>
         <ThemeToggle />
         <div className="settings-section" style={{ marginTop: "24px" }}>
-          <label>Language:</label>
+          <label>{t("settings.language")}:</label>
           <select
             className="settings-input"
-            value={localStorage.getItem("language") || "en"}
+            value={localStorage.getItem("language") || i18n.language || "en"}
             onChange={(e) => {
               const lang = e.target.value;
               localStorage.setItem("language", lang);
-              // Si usas i18next, aquí iría: i18n.changeLanguage(lang);
-              window.location.reload();
+              i18n.changeLanguage(lang);
             }}
           >
             <option value="en">English</option>
@@ -120,25 +126,28 @@ const SettingsScreen = ({
           </select>
         </div>
       </div>
+
       <div className="settings-card">
-        <h2 style={{ marginBottom: "16px" }}>Device Management</h2>
+        <h2 style={{ marginBottom: "16px" }}>
+          {t("settings.device_management")}
+        </h2>
 
         <div className="settings-section">
-          <label>Add a new device:</label>
+          <label>{t("settings.add_device")}:</label>
           <input
             className="settings-input"
             type="text"
-            placeholder="Enter device name..."
+            placeholder={t("settings.enter_device_name")}
             value={deviceName}
             onChange={(e) => setDeviceName(e.target.value)}
           />
           <button className="settings-button save" onClick={addDevice}>
-            Add Device
+            {t("settings.add_device")}
           </button>
         </div>
 
         <div className="settings-section">
-          <label>Current devices:</label>
+          <label>{t("settings.current_devices")}:</label>
           {devices.length > 0 ? (
             <ul style={{ listStyle: "none", padding: 0 }}>
               {devices.map((device) => (
@@ -157,14 +166,14 @@ const SettingsScreen = ({
                     onClick={() => deleteDevice(device.id)}
                     style={{ width: "auto", padding: "6px 12px" }}
                   >
-                    🗑️ Delete
+                    🗑️ {t("settings.delete")}
                   </button>
                 </li>
               ))}
             </ul>
           ) : (
             <p style={{ color: "#94a3b8", marginTop: "8px" }}>
-              No devices added yet.
+              {t("settings.no_devices_added")}
             </p>
           )}
         </div>

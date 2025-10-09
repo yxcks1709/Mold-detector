@@ -1,0 +1,30 @@
+.device-container {
+  background-color: #1e293b;
+  padding: 20px;
+  border-radius: 20px;
+  color: #f1f5f9;
+}
+
+.device-title {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #14b8a6;
+  margin-bottom: 20px;
+}
+
+.device-list {
+  list-style: none;
+  padding: 0;
+}
+
+.device-item {
+  background-color: #273449;
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.device-item h3 {
+  margin-bottom: 5px;
+}

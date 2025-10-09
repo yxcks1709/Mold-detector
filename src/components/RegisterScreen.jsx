@@ -4,8 +4,10 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, set } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import { auth, database } from "../firebase";
+import { useTranslation } from "react-i18next";
 
 const RegisterScreen = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -13,27 +15,22 @@ const RegisterScreen = () => {
   const navigate = useNavigate();
 
   const handleRegister = async () => {
-    console.log("📡 auth recibido:", auth);
-
     if (!email || !password || !confirmPassword) {
-      alert("Por favor completa todos los campos.");
+      alert(t("register.fill_all_fields", "Please fill all fields."));
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("Las contraseñas no coinciden");
+      alert(t("register.password_mismatch"));
       return;
     }
 
     if (password.length < 6) {
-      alert("La contraseña debe tener al menos 6 caracteres.");
+      alert(t("register.password_length"));
       return;
     }
 
     try {
-      console.log("📧 Email:", email);
-      console.log("🔑 Password:", password);
-
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -43,11 +40,11 @@ const RegisterScreen = () => {
 
       await set(ref(database, `usuarios/${user.uid}/info`), {
         email: user.email,
-        nombre: nombre || "Usuario sin nombre",
+        nombre: nombre || "Unnamed user",
         creadoEn: new Date().toISOString(),
       });
 
-      alert("Account created successfully");
+      alert(t("register.account_created"));
       navigate("/");
     } catch (error) {
       console.log("❌ Error : ", error);
@@ -57,13 +54,13 @@ const RegisterScreen = () => {
 
   return (
     <div className="login-container">
-      <h1 className="login-title">Create Account</h1>
+      <h1 className="login-title">{t("register.create_account")}</h1>
       <div className="login-box">
-        <h2 className="login-subtitle">Sign Up</h2>
+        <h2 className="login-subtitle">{t("register.sign_up")}</h2>
 
         <input
           type="text"
-          placeholder="Name"
+          placeholder={t("register.name_placeholder")}
           className="login-input"
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
@@ -71,7 +68,7 @@ const RegisterScreen = () => {
 
         <input
           type="email"
-          placeholder="Email"
+          placeholder={t("register.email_placeholder")}
           className="login-input"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -79,7 +76,7 @@ const RegisterScreen = () => {
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder={t("register.password_placeholder")}
           className="login-input"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -87,24 +84,24 @@ const RegisterScreen = () => {
 
         <input
           type="password"
-          placeholder="Confirm Password"
+          placeholder={t("register.confirm_password")}
           className="login-input"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
 
         <button className="login-button" onClick={handleRegister}>
-          Sign Up
+          {t("register.sign_up")}
         </button>
 
         <div className="login-footer">
-          Already have an account?{" "}
+          {t("register.already_account")}{" "}
           <a
             onClick={() => navigate("/login")}
             className="link"
             style={{ cursor: "pointer" }}
           >
-            Log In
+            {t("register.login")}
           </a>
         </div>
       </div>

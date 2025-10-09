@@ -39,7 +39,7 @@
     "loading": "데이터 불러오는 중...",
     "select_device": "기기 선택",
     "choose_device": "-- 기기 선택 --",
-    "data_for": "데이터:",
+    "data_for": "데이터",
     "temperature": "온도",
     "humidity": "습도",
     "uv_index": "자외선 지수",

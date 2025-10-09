@@ -1,12 +1,10 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-// Importa las traducciones
-import en from "./locales/en.json";
-import es from "./locales/es.json";
-import ko from "./locales/ko.json";
+import en from "./local/en.json";
+import es from "./local/es.json";
+import ko from "./local/ko.json";
 
-// Detecta el idioma guardado o usa inglés por defecto
 const savedLanguage = localStorage.getItem("language") || "en";
 
 i18n
@@ -17,10 +15,10 @@ i18n
       es: { translation: es },
       ko: { translation: ko }
     },
-    lng: savedLanguage, // idioma inicial
-    fallbackLng: "en", // si falta alguna traducción
+    lng: savedLanguage, 
+    fallbackLng: "en", 
     interpolation: {
-      escapeValue: false // react ya hace el escape
+      escapeValue: false 
     },
     detection: {
       order: ["localStorage", "navigator"],

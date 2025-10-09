@@ -1,7 +1,10 @@
+import React from "react";
+import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, database } from "./firebase";
+import { ref, set } from "firebase/database";
 import ProfileScreen from "./components/ProfileScreen";
 import SettingsScreen from "./components/SettingsScreen";
 import AlertsScreen from "./components/AlertsScreen";
@@ -11,15 +14,13 @@ import LoginScreen from "./components/LoginScreen";
 import Navbar from "./components/NavBar";
 import RegisterScreen from "./components/RegisterScreen";
 import "./index.css";
-import { ref, set } from "firebase/database";
+import "./i18n";
 
 const savedTheme = localStorage.getItem("theme") || "dark";
 document.documentElement.setAttribute("data-theme", savedTheme);
 
-
 function ProtectedRoute({ children }) {
   const [user, setUser] = useState(null);
-  
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (u) => setUser(u));
@@ -71,6 +72,7 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/profile"
           element={
@@ -79,6 +81,7 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/settings"
           element={
@@ -95,6 +98,7 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/alerts"
           element={
@@ -103,6 +107,7 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/history"
           element={
@@ -111,6 +116,7 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
+
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </div>
@@ -124,3 +130,9 @@ export default function App() {
     </Router>
   );
 }
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);

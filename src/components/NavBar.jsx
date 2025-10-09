@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
+import { useTranslation } from "react-i18next";
 import "./Navbar.css";
 
 const Navbar = () => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState(null);
-  
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -30,43 +32,45 @@ const Navbar = () => {
           {/* Siempre disponibles */}
           <li>
             <Link to="/home" onClick={() => setOpen(false)}>
-              Dashboard
+              {t("navbar.dashboard")}
             </Link>
           </li>
           <li>
             <Link to="/settings" onClick={() => setOpen(false)}>
-              Settings
+              {t("navbar.settings")}
             </Link>
           </li>
+
           {user && (
             <>
               <li>
                 <Link to="/profile" onClick={() => setOpen(false)}>
-                  Profile
+                  {t("navbar.profile")}
                 </Link>
               </li>
               <li>
                 <Link to="/history" onClick={() => setOpen(false)}>
-                  Data History
+                  {t("navbar.data_history")}
                 </Link>
               </li>
               <li>
                 <Link to="/alerts" onClick={() => setOpen(false)}>
-                  Alerts
+                  {t("navbar.alerts")}
                 </Link>
               </li>
             </>
           )}
+
           {!user && (
             <>
               <li>
                 <Link to="/login" onClick={() => setOpen(false)}>
-                  Login
+                  {t("navbar.login")}
                 </Link>
               </li>
               <li>
                 <Link to="/register" onClick={() => setOpen(false)}>
-                  Register
+                  {t("navbar.register")}
                 </Link>
               </li>
             </>

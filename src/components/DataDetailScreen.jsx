@@ -3,8 +3,10 @@ import "./DataDetailScreen.css";
 import { auth, database } from "../firebase";
 import { ref, onValue } from "firebase/database";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const DataDetailScreen = () => {
+  const { t } = useTranslation();
   const [historicalData, setHistoricalData] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
   const navigate = useNavigate();
@@ -12,12 +14,12 @@ const DataDetailScreen = () => {
   useEffect(() => {
     const user = auth.currentUser;
     if (!user) {
-      console.log("⚠️ No hay usuario autenticado");
+      console.log("⚠️ No authenticated user");
       return;
     }
 
     const uid = user.uid;
-    console.log("📥 Leyendo datos desde:", `usuarios/${uid}/sensores`);
+    console.log("📥 Reading data from:", `usuarios/${uid}/sensores`);
 
     const sensoresRef = ref(database, `usuarios/${uid}/sensores`);
     const unsubscribe = onValue(sensoresRef, (snapshot) => {
@@ -48,10 +50,10 @@ const DataDetailScreen = () => {
 
   return (
     <div className="data-container">
-      <h1 className="data-title"> Sensor Data History</h1>
+      <h1 className="data-title">{t("data.sensor_history")}</h1>
 
       <div className="filter-section">
-        <label className="filter-label">Filter by date:</label>
+        <label className="filter-label">{t("data.filter_date")}:</label>
         <input
           type="date"
           className="filter-input"
@@ -59,7 +61,7 @@ const DataDetailScreen = () => {
           onChange={(e) => setSelectedDate(e.target.value)}
         />
         <button className="filter-button" onClick={() => setSelectedDate("")}>
-          View all
+          {t("data.view_all")}
         </button>
       </div>
 
@@ -67,12 +69,12 @@ const DataDetailScreen = () => {
         <table className="data-table">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Temperature (°C)</th>
-              <th>Humidity (%)</th>
-              <th>UV Index</th>
+              <th>{t("data.table_headers.id")}</th>
+              <th>{t("data.table_headers.date")}</th>
+              <th>{t("data.table_headers.time")}</th>
+              <th>{t("data.table_headers.temperature")}</th>
+              <th>{t("data.table_headers.humidity")}</th>
+              <th>{t("data.table_headers.uv")}</th>
             </tr>
           </thead>
           <tbody>
@@ -100,8 +102,11 @@ const DataDetailScreen = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="5" style={{ textAlign: "center", color: "#94a3b8" }}>
-                  No Data.
+                <td
+                  colSpan="6"
+                  style={{ textAlign: "center", color: "#94a3b8" }}
+                >
+                  {t("data.no_data")}
                 </td>
               </tr>
             )}
@@ -110,7 +115,7 @@ const DataDetailScreen = () => {
       </div>
 
       <button className="back-button" onClick={() => navigate("/home")}>
-        Home
+        {t("data.home")}
       </button>
     </div>
   );

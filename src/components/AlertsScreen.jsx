@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./AlertsScreen.css";
 import { auth, database } from "../firebase";
 import { ref, onValue } from "firebase/database";
+import { useTranslation } from "react-i18next";
 
 const AlertsScreen = () => {
+  const { t } = useTranslation();
   const [alerts, setAlerts] = useState([]);
 
   useEffect(() => {
@@ -39,15 +41,14 @@ const AlertsScreen = () => {
         (entry) =>
           entry.temperature > 25 &&
           entry.humidity > 70 &&
-          entry.uv < 5 
+          entry.uv < 5
       );
 
       if (allConditionsMet) {
         setAlerts([
           {
-            type: "⚠️ Mold Growth Risk",
-            message:
-              "Favorable conditions for mold growth have been present continuously for the last 3 hours.",
+            type: t("alerts.mold_risk"),
+            message: t("alerts.mold_message"),
             timestamp: now,
           },
         ]);
@@ -55,16 +56,16 @@ const AlertsScreen = () => {
         setAlerts([]);
       }
     });
-  }, []);
+  }, [t]);
 
   return (
     <div className="alerts-container">
-      <h1 className="alerts-title">Mold Alerts</h1>
+      <h1 className="alerts-title">{t("alerts.mold_alerts")}</h1>
 
       <div className="alerts-box">
         {alerts.length === 0 ? (
           <p style={{ textAlign: "center", color: "#94a3b8" }}>
-            ✅ No continuous mold risk detected in the last 3 hours.
+            {t("alerts.no_risk")}
           </p>
         ) : (
           <ul className="alerts-list">

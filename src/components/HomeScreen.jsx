@@ -12,12 +12,14 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
+import { useTranslation } from "react-i18next";
 
 const HomeScreen = ({
   tempAlertLimit = 28,
   humidAlertLimit = 70,
   isCelsisus = true,
 }) => {
+  const { t } = useTranslation();
   const [devices, setDevices] = useState([]);
   const [selectedDevice, setSelectedDevice] = useState("");
   const [latestData, setLatestData] = useState(null);
@@ -69,10 +71,10 @@ const HomeScreen = ({
         ...v,
         time: v.timestamp
           ? new Date(v.timestamp).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })
-          : "No time",
+            hour: "2-digit",
+            minute: "2-digit",
+          })
+          : "--",
       }));
 
       const threeHoursAgo = Date.now() - 3 * 60 * 60 * 1000;
@@ -107,30 +109,30 @@ const HomeScreen = ({
 
   const status =
     latestData &&
-    (latestData.temperature > tempLimitInCelsius ||
-      latestData.humidity > humidAlertLimit ||
-      latestData.uv > 8)
-      ? "Alert"
-      : "Normal";
+      (latestData.temperature > tempLimitInCelsius ||
+        latestData.humidity > humidAlertLimit ||
+        latestData.uv > 8)
+      ? t("home.alert")
+      : t("home.normal");
 
   return (
     <div className="home-container">
-      <h1 className="home-title">📊 Dashboard</h1>
+      <h1 className="home-title">📊 {t("home.dashboard")}</h1>
 
       {devices.length === 0 && (
         <p style={{ textAlign: "center", marginTop: "20px", color: "#94a3b8" }}>
-          No devices found. Add one from the Settings page.
+          {t("home.no_devices")}
         </p>
       )}
 
       {loading ? (
-        <p style={{ textAlign: "center" }}>Loading Data...</p>
+        <p style={{ textAlign: "center" }}>{t("home.loading")}</p>
       ) : (
         <>
           <div className="data-box">
             <div className="data-header">
               <label htmlFor="device-select" className="device-label">
-                📡 Select Device:
+                📡 {t("home.select_device")}
               </label>
               <select
                 id="device-select"
@@ -138,7 +140,7 @@ const HomeScreen = ({
                 value={selectedDevice}
                 onChange={(e) => setSelectedDevice(e.target.value)}
               >
-                <option value="">-- Choose a device --</option>
+                <option value="">{t("home.choose_device")}</option>
                 {devices.map((device) => (
                   <option key={device.id} value={device.id}>
                     {device.name}
@@ -148,8 +150,9 @@ const HomeScreen = ({
             </div>
 
             <h2 style={{ textAlign: "center", marginTop: "12px" }}>
-              Data for:{" "}
-              {devices.find((d) => d.id === selectedDevice)?.name || "Device"}
+              {t("home.data_for")}:{" "}
+              {devices.find((d) => d.id === selectedDevice)?.name ||
+                t("home.select_device")}
             </h2>
 
             <div className="data-grid">
@@ -157,29 +160,28 @@ const HomeScreen = ({
                 <p className="data-value temp-value">
                   {tempValue}°{isCelsisus ? "C" : "F"}
                 </p>
-                <p className="data-label">Temperature</p>
+                <p className="data-label">{t("home.temperature")}</p>
               </div>
               <div className="data-card">
                 <p className="data-value humid-value">{humidValue}%</p>
-                <p className="data-label">Humidity</p>
+                <p className="data-label">{t("home.humidity")}</p>
               </div>
               <div className="data-card">
                 <p className="data-value uv-value">{uvValue}</p>
-                <p className="data-label">UV Index</p>
+                <p className="data-label">{t("home.uv_index")}</p>
               </div>
             </div>
 
             <p
-              className={`status ${
-                status === "Normal" ? "status-normal" : "status-alert"
-              }`}
+              className={`status ${status === t("home.normal") ? "status-normal" : "status-alert"
+                }`}
             >
-              Status: {status}
+              {t("home.status")}: {status}
             </p>
           </div>
 
           <div className="chart-box">
-            <h2 style={{ marginBottom: "12px" }}>Graph (Last 3 hours)</h2>
+            <h2 style={{ marginBottom: "12px" }}>{t("home.graph_title")}</h2>
             {chartData.length > 0 ? (
               <ResponsiveContainer width="100%" height={250}>
                 <LineChart data={chartData}>
@@ -192,28 +194,29 @@ const HomeScreen = ({
                     type="monotone"
                     dataKey="temperature"
                     stroke="#38bdf8"
-                    name={`Temperature (°${isCelsisus ? "C" : "F"})`}
+                    name={`${t("home.temperature")} (°${isCelsisus ? "C" : "F"
+                      })`}
                     dot={false}
                   />
                   <Line
                     type="monotone"
                     dataKey="humidity"
                     stroke="#a78bfa"
-                    name="Humidity (%)"
+                    name={`${t("home.humidity")} (%)`}
                     dot={false}
                   />
                   <Line
                     type="monotone"
                     dataKey="uv"
                     stroke="#f59e0b"
-                    name="UV Index"
+                    name={t("home.uv_index")}
                     dot={false}
                   />
                 </LineChart>
               </ResponsiveContainer>
             ) : (
               <p style={{ textAlign: "center", color: "#94a3b8" }}>
-                No data in the last 3 hours.
+                {t("home.no_data")}
               </p>
             )}
           </div>

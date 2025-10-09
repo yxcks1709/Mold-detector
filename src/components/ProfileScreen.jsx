@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 import { ref, get } from "firebase/database";
 import { database } from "../firebase";
+import { useTranslation } from "react-i18next";
 import "./ProfileScreen.css";
 
 const ProfileScreen = () => {
+  const { t } = useTranslation();
   const [userInfo, setUserInfo] = useState(null);
   const navigate = useNavigate();
 
@@ -29,16 +31,16 @@ const ProfileScreen = () => {
     const auth = getAuth();
     try {
       await signOut(auth);
-      console.log("Sesión cerrada correctamente");
+      console.log("✅ Session closed successfully");
       navigate("/login");
     } catch (error) {
-      console.error("Error al cerrar sesión:", error.message);
+      console.error("Logout error:", error.message);
     }
   };
 
   return (
     <div className="profile-container">
-      <h1 className="profile-title">Profile</h1>
+      <h1 className="profile-title">{t("profile.profile")}</h1>
 
       {userInfo ? (
         <>
@@ -47,17 +49,21 @@ const ProfileScreen = () => {
           </div>
 
           <div className="profile-info">
-            <p className="label">UID:</p>
+            <p className="label">{t("profile.uid")}:</p>
             <p className="value">{userInfo.uid}</p>
 
-            <p className="label">Nombre:</p>
-            <p className="value">{userInfo.nombre || "No disponible"}</p>
+            <p className="label">{t("profile.name")}:</p>
+            <p className="value">
+              {userInfo.nombre || t("profile.not_available", "Not available")}
+            </p>
 
-            <p className="label">E-Mail:</p>
-            <p className="value">{userInfo.email || "No disponible"}</p>
+            <p className="label">{t("profile.email")}:</p>
+            <p className="value">
+              {userInfo.email || t("profile.not_available", "Not available")}
+            </p>
 
-            <p className="label">Rol:</p>
-            <p className="value">{userInfo.role || "Usuario"}</p>
+            <p className="label">{t("profile.role")}:</p>
+            <p className="value">{userInfo.role || t("profile.user")}</p>
           </div>
 
           <div className="profile-buttons">
@@ -65,22 +71,21 @@ const ProfileScreen = () => {
               className="profile-button settings"
               onClick={() => navigate("/settings")}
             >
-              Settings
+              {t("profile.settings")}
             </button>
             <button className="profile-button logout" onClick={handleLogout}>
-              Log Out
+              {t("profile.logout")}
             </button>
-
             <button
               className="profile-button back"
               onClick={() => navigate("/home")}
             >
-              Home
+              {t("profile.home")}
             </button>
           </div>
         </>
       ) : (
-        <p style={{ textAlign: "center" }}>Loading Profile...</p>
+        <p style={{ textAlign: "center" }}>{t("profile.loading")}</p>
       )}
     </div>
   );
