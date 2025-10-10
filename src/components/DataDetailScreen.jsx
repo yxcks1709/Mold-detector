@@ -7,6 +7,8 @@ import { useTranslation } from "react-i18next";
 
 const DataDetailScreen = () => {
   const { t } = useTranslation();
+  const [devices, setDevices] = useState([]);
+  const [selectedDevice, setSelectedDevice] = useState("");
   const [historicalData, setHistoricalData] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
   const navigate = useNavigate();
@@ -19,11 +21,37 @@ const DataDetailScreen = () => {
     }
 
     const uid = user.uid;
-    console.log("📥 Reading data from:", `usuarios/${uid}/sensores`);
+    const devicesRef = ref(database, `usuarios/${uid}/devices`);
 
-    const sensoresRef = ref(database, `usuarios/${uid}/sensores`);
-    const unsubscribe = onValue(sensoresRef, (snapshot) => {
+    const unsubscribeDevices = onValue(devicesRef, (snapshot) => {
       const data = snapshot.val();
+      if (!data) {
+        setDevices([]);
+        return;
+      }
+      const deviceNames = Object.keys(data);
+      setDevices(deviceNames);
+      if (!selectedDevice && deviceNames.length > 0) {
+        setSelectedDevice(deviceNames[0]);
+      }
+    });
+
+    return () => unsubscribeDevices();
+  }, []);
+
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (!user || !selectedDevice) return;
+
+    const uid = user.uid;
+    const sensoresPath = `usuarios/${uid}/devices/${selectedDevice}/sensores`;
+
+    console.log("📥 Leyendo datos desde:", sensoresPath);
+
+    const sensoresRef = ref(database, sensoresPath);
+    const unsubscribeData = onValue(sensoresRef, (snapshot) => {
+      const data = snapshot.val();
+      console.log("🔥 Datos en Firebase:", data);
       if (!data) {
         setHistoricalData([]);
         return;
@@ -37,8 +65,8 @@ const DataDetailScreen = () => {
       setHistoricalData(entries);
     });
 
-    return () => unsubscribe();
-  }, []);
+    return () => unsubscribeData();
+  }, [selectedDevice]);
 
   const filteredData = useMemo(() => {
     if (!selectedDate) return historicalData;
@@ -51,6 +79,21 @@ const DataDetailScreen = () => {
   return (
     <div className="data-container">
       <h1 className="data-title">{t("data.sensor_history")}</h1>
+
+      <div className="device-selector">
+        <label>{t("data.device_name", "Device")}:</label>
+        <select
+          value={selectedDevice}
+          onChange={(e) => setSelectedDevice(e.target.value)}
+          className="device-select"
+        >
+          {devices.map((device) => (
+            <option key={device} value={device}>
+              {device}
+            </option>
+          ))}
+        </select>
+      </div>
 
       <div className="filter-section">
         <label className="filter-label">{t("data.filter_date")}:</label>
@@ -97,7 +140,7 @@ const DataDetailScreen = () => {
                   </td>
                   <td>{d.temperature?.toFixed(1)}</td>
                   <td>{d.humidity?.toFixed(1)}</td>
-                  <td>{d.uv?.toFixed(1)}</td>
+                  <td>{d.uv?.toFixed(3)}</td>
                 </tr>
               ))
             ) : (
