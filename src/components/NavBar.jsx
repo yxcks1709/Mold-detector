@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
 import { useTranslation } from "react-i18next";
-import "./Navbar.css";
+import "./NavBar.css";
 
 const Navbar = () => {
   const { t } = useTranslation();
