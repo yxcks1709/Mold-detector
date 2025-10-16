@@ -4,6 +4,7 @@ import { initReactI18next } from "react-i18next";
 import en from "./local/en.json";
 import es from "./local/es.json";
 import ko from "./local/ko.json";
+import lao from "./local/lao.json";
 
 const savedLanguage = localStorage.getItem("language") || "en";
 
@@ -13,7 +14,8 @@ i18n
     resources: {
       en: { translation: en },
       es: { translation: es },
-      ko: { translation: ko }
+      ko: { translation: ko },
+      lao: { translation: lao }
     },
     lng: savedLanguage, 
     fallbackLng: "en", 

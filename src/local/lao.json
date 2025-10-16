@@ -1,0 +1,110 @@
+{
+  "login": {
+    "welcome": "ຍິນດີຕອນຮັບ!",
+    "login": "ລົງທະບຽນ",
+    "email_placeholder": "ອີເມວ/ຜູ້ໃຊ້",
+    "password_placeholder": "ລະຫັດຜ່ານ",
+    "trouble": "ມີບັນຫາກັບການລົງທະບຽນບໍ?",
+    "remember_me": "ຈຳກະລຸນາ",
+    "no_account": "ບໍ່ມີບັນຊີ?",
+    "signup": "ສະມັກສະມາຊິກ",
+    "login_success": "ການລົງທະບຽນສຳຄັນ",
+    "login_error": "ການລົງທະບຽນຜິດພາດ"
+  },
+  "register": {
+    "create_account": "ສ້າງບັນຊີ",
+    "sign_up": "ສະມັກສະມາຊິກ",
+    "name_placeholder": "ຊື່",
+    "email_placeholder": "ອີເມວ",
+    "password_placeholder": "ລະຫັດຜ່ານ",
+    "confirm_password": "ຢືນຢັນລະຫັດຜ່ານ",
+    "already_account": "ມີບັນຊີຢູ່ແລ້ວບໍ?",
+    "login": "ລົງທະບຽນ",
+    "password_mismatch": "ລະຫັດຜ່ານບໍ່ຄືກັນ",
+    "password_length": "ລະຫັດຜ່ານຕ້ອງມີຍອດຢ່າງນ້ອຍ 6 ຕົວອັກສອນ",
+    "account_created": "ບັນຊີສ້າງແລ້ວ"
+  },
+  "navbar": {
+    "dashboard": "ຫນ້າຫຼັກ",
+    "settings": "ການຕັ້ງຄ່າ",
+    "profile": "ຂໍ້ມູນສະມາຊິກ",
+    "data_history": "ປະຫວັດຂໍ້ມູນ",
+    "alerts": "ເຕືອນ",
+    "login": "ລົງທະບຽນ",
+    "register": "ລົງທະບຽນ"
+  },
+  "home": {
+    "dashboard": "ຫນ້າຫຼັກ",
+    "no_devices": "ບໍ່ມີອຸປະກອນ. ກະລຸນາເພີ່ມອຸປະກອນຈາກຫນ້າຕັ້ງຄ່າ.",
+    "loading": "ກຳລັງດຶງຂໍ້ມູນ...",
+    "select_device": "ເລືອກອຸປະກອນ",
+    "choose_device": "-- ເລືອກອຸປະກອນ --",
+    "data_for": "ຂໍ້ມູນ",
+    "temperature": "ອຸນຫະພູມ",
+    "humidity": "ຄວາມຊື້ນ",
+    "uv_index": "ດັດດີຂອງລະຫັດ UV",
+    "status": "ສະຖານະ",
+    "normal": "ປົກກະຕິ",
+    "alert": "ເຕືອນ",
+    "graph_title": "ການວາງກຸນ (ຫົວຂໍ້ຫຼາຍ 3 ຊົ່ວໂມງ)",
+    "no_data": "ບໍ່ມີຂໍ້ມູນໃນ 3 ຊົ່ວໂມງທີ່ຜ່ານມາ."
+  },
+  "settings": {
+    "settings": "ການຕັ້ງຄ່າ",
+    "temperature_unit": "ຫົວຫນ່ວຍອຸນຫະພູມ",
+    "celsius": "ອຸນຫະພູມອິງ (°C)",
+    "fahrenheit": "ອຸນຫະພູມຮາບ (°F)",
+    "temp_alert_limit": "ກຳຫົວກອງເຕືອນອຸນຫະພູມ",
+    "humid_alert_limit": "ກຳຫົວກອງເຕືອນຄວາມຊື້ນ",
+    "save_settings": "ບັນທຶກການຕັ້ງຄ່າ",
+    "appearance_language": "ເທມາແລະພາສາ",
+    "language": "ພາສາ",
+    "device_management": "ຈັດການອຸປະກອນ",
+    "add_device": "ເພີ່ມອຸປະກອນໃໝ່",
+    "enter_device_name": "ປ້ອນຊື່ອຸປະກອນ...",
+    "current_devices": "ອຸປະກອນປະຈຸບັນ",
+    "delete": "ລົບ",
+    "no_devices_added": "ບໍ່ມີອຸປະກອນທີ່ເພີ່ມລາຍການ."
+  },
+  "profile": {
+    "profile": "ຂໍ້ມູນສະມາຊິກ",
+    "loading": "ກຳລັງດຶງຂໍ້ມູນສະມາຊິກ...",
+    "uid": "UID",
+    "name": "ຊື່",
+    "email": "ອີເມວ",
+    "role": "ບົດບາດ",
+    "user": "ຜູ້ໃຊ້",
+    "settings": "ການຕັ້ງຄ່າ",
+    "logout": "ອອກຈາກລະບົບ",
+    "home": "ຫນ້າຫຼັກ"
+ },
+    "data": {
+    "sensor_history": "ປະຫວັດຂໍ້ມູນ",
+    "filter_date": "ວັນທີ",
+    "view_all": "ມອງທັງຫມົດ",
+    "table_headers": {
+      "id": "#",
+      "date": "ວັນທີ",
+      "time": "ເວລາ",
+      "temperature": "ອຸນຫະພູມ (°C)",
+      "humidity": "ຄວາມຊື້ນ (%)",
+      "uv": "ລະຫັດ UV"
+    },
+    "no_data": "ບໍ່ມີຂໍ້ມູນ.",
+    "home": "ຫນ້າຫຼັກ"
+  },
+  "alerts": {
+    "mold_alerts": "ການເຕືອນ",
+    "no_risk": "✅ ບໍ່ມີຄວາມສຽງພາຍໃນ 3 ຊົ່ວໂມງທີ່ຜ່ານມາ.",
+    "mold_risk": "⚠️ ມີຄວາມສຽງ",
+    "mold_message": "ມີຄວາມສຽງພາຍໃນ 3 ຊົ່ວໂມງທີ່ຜ່ານມາ."
+  },
+  "devices": {
+    "add_device": "ເພີ່ມອຸປະກອນ",
+    "device_name_placeholder": "ຊື່ອຸປະກອນ",
+    "device_created": "✅ ອຸປະກອນ \"{{deviceName}}\" ສ້າງແລ້ວ.",
+    "device_error": "❌ ມີຄວາມຜິດພາດໃນການສ້າງອຸປະກອນ.",
+    "not_authenticated": "⚠️ ຍັງບໍ່ລົງທະບຽນ.",
+    "enter_name": "⚠️ ກະລຸນາເພີ່ມຊື່."
+  }
+}
