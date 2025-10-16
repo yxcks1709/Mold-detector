@@ -16,7 +16,7 @@ i18n
       en: { translation: en },
       es: { translation: es },
       ko: { translation: ko },
-      lao: { translation: lao }
+      lao: { translation: lao },
       thai: { translation: thai }
     },
     lng: savedLanguage, 
