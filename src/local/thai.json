@@ -1,0 +1,110 @@
+{
+  "login": {
+    "welcome": "ยินดีต้อนรับ!",
+    "login": "เข้าสู่ระบบ",
+    "email_placeholder": "อีเมล/ผู้ใช้",
+    "password_placeholder": "รหัสผ่าน",
+    "trouble": "มีปัญหากับการเข้าสู่ระบบหรือไม่?",
+    "remember_me": "จำฉันไว้",
+    "no_account": "ไม่มีบัญชีหรือ?",
+    "signup": "สมัครสมาชิก",
+    "login_success": "เข้าสู่ระบบสำเร็จ",
+    "login_error": "ข้อผิดพลาดในการเข้าสู่ระบบ"
+  },
+  "register": {
+    "create_account": "สร้างบัญชี",
+    "sign_up": "สมัครสมาชิก",
+    "name_placeholder": "ชื่อ",
+    "email_placeholder": "อีเมล",
+    "password_placeholder": "รหัสผ่าน",
+    "confirm_password": "ยืนยันรหัสผ่าน",
+    "already_account": "มีบัญชีอยู่แล้วหรือ?",
+    "login": "เข้าสู่ระบบ",
+    "password_mismatch": "รหัสผ่านไม่ตรงกัน",
+    "password_length": "รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร",
+    "account_created": "บัญชีถูกสร้างสำเร็จ"
+  },
+  "navbar": {
+    "dashboard": "แดชบอร์ด",
+    "settings": "การตั้งค่า",
+    "profile": "โปรไฟล์",
+    "data_history": "ประวัติข้อมูล",
+    "alerts": "การแจ้งเตือน",
+    "login": "เข้าสู่ระบบ",
+    "register": "สมัครสมาชิก"
+  },
+  "home": {
+    "dashboard": "แดชบอร์ด",
+    "no_devices": "ไม่มีอุปกรณ์ กรุณาเพิ่มอุปกรณ์จากหน้าการตั้งค่า",
+    "loading": "กำลังโหลดข้อมูล...",
+    "select_device": "เลือกอุปกรณ์",
+    "choose_device": "-- เลือกอุปกรณ์ --",
+    "data_for": "ข้อมูลสำหรับ",
+    "temperature": "อุณหภูมิ",
+    "humidity": "ความชื้น",
+    "uv_index": "ดัชนี UV",
+    "status": "สถานะ",
+    "normal": "ปกติ",
+    "alert": "เตือนภัย",
+    "graph_title": "กราฟ (3 ชั่วโมงที่ผ่านมา)",
+    "no_data": "ไม่มีข้อมูลใน 3 ชั่วโมงที่ผ่านมา"
+  },
+  "settings": {
+    "settings": "การตั้งค่า",
+    "temperature_unit": "หน่วยอุณหภูมิ",
+    "celsius": "เซลเซียส (°C)",
+    "fahrenheit": "ฟาเรนไฮต์ (°F)",
+    "temp_alert_limit": "ขีดจำกัดการเตือนอุณหภูมิ",
+    "humid_alert_limit": "ขีดจำกัดการเตือนความชื้น",
+    "save_settings": "บันทึกการตั้งค่า",
+    "appearance_language": "ธีมและภาษา",
+    "language": "ภาษา",
+    "device_management": "การจัดการอุปกรณ์",
+    "add_device": "เพิ่มอุปกรณ์ใหม่",
+    "enter_device_name": "กรอกชื่ออุปกรณ์...",
+    "current_devices": "อุปกรณ์ปัจจุบัน",
+    "delete": "ลบ",
+    "no_devices_added": "ยังไม่มีการเพิ่มอุปกรณ์"
+  },
+  "profile": {
+    "profile": "โปรไฟล์",
+    "loading": "กำลังโหลดโปรไฟล์...",
+    "uid": "UID",
+    "name": "ชื่อ",
+    "email": "อีเมล",
+    "role": "บทบาท",
+    "user": "ผู้ใช้",
+    "settings": "การตั้งค่า",
+    "logout": "ออกจากระบบ",
+    "home": "หน้าแรก"
+  },
+  "data": {
+    "sensor_history": "ประวัติข้อมูลเซนเซอร์",
+    "filter_date": "กรองตามวันที่",
+    "view_all": "ดูทั้งหมด",
+    "table_headers": {
+      "id": "#",
+      "date": "วันที่",
+      "time": "เวลา",
+      "temperature": "อุณหภูมิ (°C)",
+      "humidity": "ความชื้น (%)",
+      "uv": "ดัชนี UV"
+    },
+    "no_data": "ไม่มีข้อมูล",
+    "home": "หน้าแรก"
+  },
+  "alerts": {
+    "mold_alerts": "การแจ้งเตือนเชื้อรา",
+    "no_risk": "✅ ไม่มีความเสี่ยงจากเชื้อราใน 3 ชั่วโมงที่ผ่านมา",
+    "mold_risk": "⚠️ ความเสี่ยงในการเจริญเติบโตของเชื้อรา",
+    "mold_message": "ในช่วง 3 ชั่วโมงที่ผ่านมา มีสภาวะที่เหมาะสมต่อการเจริญเติบโตของเชื้อรา"
+  },
+  "devices": {
+    "add_device": "เพิ่มอุปกรณ์",
+    "device_name_placeholder": "ชื่ออุปกรณ์",
+    "device_created": "✅ อุปกรณ์ \"{{deviceName}}\" ถูกสร้างเรียบร้อยแล้ว",
+    "device_error": "❌ เกิดข้อผิดพลาดในการสร้างอุปกรณ์",
+    "not_authenticated": "⚠️ ยังไม่ได้เข้าสู่ระบบ",
+    "enter_name": "⚠️ กรุณากรอกชื่อ"
+  }
+}

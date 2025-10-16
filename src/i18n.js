@@ -5,6 +5,7 @@ import en from "./local/en.json";
 import es from "./local/es.json";
 import ko from "./local/ko.json";
 import lao from "./local/lao.json";
+import thai from "./local/thai.json";
 
 const savedLanguage = localStorage.getItem("language") || "en";
 
@@ -16,6 +17,7 @@ i18n
       es: { translation: es },
       ko: { translation: ko },
       lao: { translation: lao }
+      thai: { translation: thai }
     },
     lng: savedLanguage, 
     fallbackLng: "en", 

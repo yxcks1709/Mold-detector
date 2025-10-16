@@ -136,6 +136,7 @@ const SettingsScreen = ({
             <option value="es">Español</option>
             <option value="ko">한국어</option>
             <option value="lao">ພາສາລາວ</option>
+            <option value="thai">ภาษาไทย</option>
           </select>
         </div>
       </div>
