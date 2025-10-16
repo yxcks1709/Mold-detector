@@ -14,11 +14,7 @@ import {
 } from "recharts";
 import { useTranslation } from "react-i18next";
 
-const HomeScreen = ({
-  tempAlertLimit = 28,
-  humidAlertLimit = 70,
-  isCelsisus = true,
-}) => {
+const HomeScreen = ({ isCelsisus = true }) => {
   const { t } = useTranslation();
   const [devices, setDevices] = useState([]);
   const [selectedDevice, setSelectedDevice] = useState("");
@@ -28,6 +24,27 @@ const HomeScreen = ({
 
   const convertTemp = (temp) =>
     isCelsisus ? temp.toFixed(1) : ((temp * 9) / 5 + 32).toFixed(1);
+
+  const getStatusColor = (temp, humid, uv) => {
+    if (uv >= 10) return "blue";
+    if (humid >= 80 && temp >= 20 && temp <= 30) return "red";
+    if (humid >= 70 && temp >= 20) return "orange";
+    if (humid >= 60 && humid < 70) return "yellow";
+    if (humid < 60) return "green";
+    return "gray";
+  };
+
+  const getStatusText = (temp, humid, uv) => {
+    if (uv >= 10) return `🔵 ${t("status.uv_high")}`;
+    if (humid >= 80 && temp >= 20 && temp <= 30)
+      return `🔴 ${t("status.high_risk")}`;
+    if (humid >= 70 && temp >= 20)
+      return `🟠 ${t("status.moderate_risk")}`;
+    if (humid >= 60 && humid < 70)
+      return `🟡 ${t("status.start_growth")}`;
+    if (humid < 60) return `🟢 ${t("status.safe")}`;
+    return `⚪ ${t("status.unknown")}`;
+  };
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -103,17 +120,9 @@ const HomeScreen = ({
   const humidValue = latestData?.humidity ?? "--";
   const uvValue = latestData?.uv?.toFixed(1) ?? "--";
 
-  const tempLimitInCelsius = isCelsisus
-    ? tempAlertLimit
-    : ((tempAlertLimit - 32) * 5) / 9;
-
-  const status =
-    latestData &&
-    (latestData.temperature > tempLimitInCelsius ||
-      latestData.humidity > humidAlertLimit ||
-      latestData.uv > 8)
-      ? t("home.alert")
-      : t("home.normal");
+  const color = latestData
+    ? getStatusColor(latestData.temperature, latestData.humidity, latestData.uv)
+    : "gray";
 
   return (
     <div className="home-container">
@@ -172,13 +181,25 @@ const HomeScreen = ({
               </div>
             </div>
 
-            <p
-              className={`status ${
-                status === t("home.normal") ? "status-normal" : "status-alert"
-              }`}
-            >
-              {t("home.status")}: {status}
-            </p>
+            {latestData && (
+              <p
+                className="status"
+                style={{
+                  backgroundColor: color,
+                  color: "#000000ff",
+                  padding: "10px",
+                  borderRadius: "8px",
+                  marginTop: "10px",
+                  textAlign: "center",
+                }}
+              >
+                {getStatusText(
+                  latestData.temperature,
+                  latestData.humidity,
+                  latestData.uv
+                )}
+              </p>
+            )}
           </div>
 
           <div className="chart-box">
@@ -195,6 +216,7 @@ const HomeScreen = ({
                     type="monotone"
                     dataKey="temperature"
                     stroke="#38bdf8"
+                    strokeWidth={2}
                     name={`${t("home.temperature")} (°${
                       isCelsisus ? "C" : "F"
                     })`}
@@ -203,7 +225,8 @@ const HomeScreen = ({
                   <Line
                     type="monotone"
                     dataKey="humidity"
-                    stroke="#a78bfa"
+                    stroke={color}
+                    strokeWidth={2}
                     name={`${t("home.humidity")} (%)`}
                     dot={false}
                   />
@@ -211,6 +234,7 @@ const HomeScreen = ({
                     type="monotone"
                     dataKey="uv"
                     stroke="#f59e0b"
+                    strokeWidth={2}
                     name={t("home.uv_index")}
                     dot={false}
                   />

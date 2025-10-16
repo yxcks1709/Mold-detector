@@ -49,6 +49,14 @@
     "graph_title": "Gráfico (Últimas 3 horas)",
     "no_data": "No hay datos en las últimas 3 horas."
   },
+  "status": {
+  "uv_high": "UV alto: el moho está inhibido",
+  "high_risk": "Alta probabilidad de crecimiento de moho",
+  "moderate_risk": "Riesgo moderado de moho",
+  "start_growth": "Inicio del crecimiento posible",
+  "safe": "Condiciones seguras",
+  "unknown": "Datos insuficientes"
+  },
   "settings": {
     "settings": "Ajustes",
     "temperature_unit": "Unidad de temperatura",

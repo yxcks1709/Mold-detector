@@ -49,6 +49,14 @@
     "graph_title": "Graph (Last 3 hours)",
     "no_data": "No data in the last 3 hours."
   },
+  "status": {
+  "uv_high": "High UV: mold growth inhibited",
+  "high_risk": "High risk of mold growth",
+  "moderate_risk": "Moderate risk of mold",
+  "start_growth": "Early signs of growth",
+  "safe": "Safe conditions",
+  "unknown": "Insufficient data"
+  },
   "settings": {
     "settings": "Settings",
     "temperature_unit": "Temperature Unit",
